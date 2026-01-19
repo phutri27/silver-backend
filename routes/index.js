@@ -1,5 +1,5 @@
 const express = require('express')
-const { renderTable, createRow, updateRow, deleteRow } = require("../controller/index.controller")
+const { renderTable, createRow, updateRow, deleteRow, getApi } = require("../controller/index.controller")
 
 const router = express.Router()
 router.get("/", renderTable)
@@ -10,4 +10,5 @@ router.put("/row/:id", updateRow)
 
 router.delete("/row/:id", deleteRow)
 
+router.get("/api/price", getApi)
 module.exports = router

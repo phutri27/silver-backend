@@ -27,9 +27,33 @@ const deleteRow = async (req, res) => {
   })
 }
 
+const getApi = async(req, res) => {
+      try {
+        const response = await fetch("https://giabac.ancarat.com/api/price-data");
+        if (!response.ok){
+            throw new Error(`Upstream of ${response.status}`)
+        }
+        const datas = await response.json()
+        let price;
+        for (const data of datas){
+            if (data.includes('Ngân Long Quảng Tiến 999 - 1 lượng')){
+                price = data[2]
+                break
+            }
+        }
+        const priceArr = price.split(",")
+        const result = Number(priceArr.join(""))
+        return res.status(200).json(result)
+
+    } catch (error) {
+        throw new Error("Loi data, lien he phu ngay")
+    }
+}
+
 module.exports = {
     renderTable,
     createRow,
     updateRow,
-    deleteRow
+    deleteRow,
+    getApi
 }
